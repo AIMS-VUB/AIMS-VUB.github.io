@@ -1,0 +1,35 @@
+name: GPU Experiment
+description: Schedule a GPU experiment
+title: "[GPU Experiment]: "
+labels: ["experiment"]
+
+body:
+
+- type: input
+  id: user
+  attributes:
+    label: Name
+  validations:
+    required: true
+
+- type: input
+  id: gpu
+  attributes:
+    label: GPU machine(s)
+  validations:
+    required: true
+
+- type: input
+  id: start
+  attributes:
+    label: Start time
+
+- type: input
+  id: duration
+  attributes:
+    label: Expected duration
+
+- type: textarea
+  id: description
+  attributes:
+    label: Description
