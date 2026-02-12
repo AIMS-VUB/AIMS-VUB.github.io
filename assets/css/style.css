@@ -1,61 +1,57 @@
+/* Body and page layout */
 body {
-
-font-family: Arial;
-margin: 40px;
-background: #f5f5f5;
-
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  margin: 40px;
 }
 
-header {
-
-margin-bottom: 30px;
-
+header, footer {
+  margin-bottom: 30px;
 }
 
-nav a {
-
-margin-right: 15px;
-text-decoration: none;
-font-weight: bold;
-
+/* Navigation buttons */
+nav a, .button {
+  margin-right: 15px;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .button {
-
-background: #0366d6;
-color: white;
-padding: 8px 12px;
-border-radius: 6px;
-
+  background: #0366d6;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
 }
 
+/* Main content */
 .content {
-
-background: white;
-padding: 30px;
-border-radius: 8px;
-
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
 }
 
-.experiment {
-
-border: 1px solid #ddd;
-padding: 15px;
-margin-top: 15px;
-border-radius: 6px;
-
+/* Experiment card */
+.experiment-card {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-left: 6px solid #0366d6;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 15px;
+  box-shadow: 1px 2px 4px rgba(0,0,0,0.05);
 }
 
-.meta {
-
-color: #666;
-font-size: 12px;
-
+.experiment-card h3 {
+  margin-top: 0;
+  color: #0366d6;
 }
 
-footer {
+.experiment-card p {
+  margin: 5px 0;
+}
 
-margin-top: 40px;
-color: #666;
-
+.experiment-card .meta {
+  font-size: 12px;
+  color: #666;
+  margin-top: 10px;
 }
