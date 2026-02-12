@@ -1,0 +1,17 @@
+title: GPU Experiment Scheduler
+description: Schedule and log GPU experiments in the lab
+baseurl: ""
+url: "https://YOURORG.github.io"
+
+markdown: kramdown
+
+theme: null
+
+plugins: []
+
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: default
