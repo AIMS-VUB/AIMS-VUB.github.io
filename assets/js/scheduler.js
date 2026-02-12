@@ -17,40 +17,32 @@ fetch(`https://api.github.com/repos/${owner}/${repo}/issues?labels=experiment&st
     let html = "";
 
     issues.forEach(issue => {
-      // Create object to store fields
-      const fields = {
-        experiment_name: "",
-        requested_by: "",
-        started_by: "",
-        gpu: "",
-        start_time: "",
-        duration: "",
-        description: ""
-      };
 
-      // Parse issue body line by line
-      const lines = issue.body.split("\n");
-      lines.forEach(line => {
-        const index = line.indexOf(":");
-        if (index > -1) {
-          const key = line.slice(0, index).trim().toLowerCase().replace(/\s/g,"_");
-          const value = line.slice(index + 1).trim();
-          if (key in fields && value) {
-            fields[key] = value;
-          }
+      // Build a map from body lines
+      const map = {};
+      issue.body.split("\n").forEach(line => {
+        const match = line.match(/^([\w\s]+):\s*(.*)$/);
+        if (match) {
+          const key = match[1].trim().toLowerCase().replace(/\s+/g, "_");
+          const val = match[2].trim();
+          map[key] = val;
         }
       });
 
       html += `
         <div class="experiment-card">
-          <h3>${fields.experiment_name || issue.title}</h3>
-          <p><strong>Requested by:</strong> ${fields.requested_by || "-"}</p>
-          <p><strong>Started by:</strong> ${fields.started_by || "-"}</p>
-          <p><strong>GPU:</strong> ${fields.gpu || "-"}</p>
-          <p><strong>Start:</strong> ${fields.start_time || "-"}</p>
-          <p><strong>Duration:</strong> ${fields.duration || "-"}</p>
-          ${fields.description ? `<p><strong>Description:</strong> ${fields.description}</p>` : ""}
-          <p class="meta">GitHub: <a href="${issue.html_url}" target="_blank">View Issue</a></p>
+          <h3>${map.experiment_name || issue.title}</h3>
+
+          ${map.requested_by ? `<p><strong>Requested by:</strong> ${map.requested_by}</p>` : ""}
+          ${map.started_by ? `<p><strong>Started by:</strong> ${map.started_by}</p>` : ""}
+          ${map.gpu_machine_s ? `<p><strong>GPU(s):</strong> ${map.gpu_machine_s}</p>` : ""}
+          ${map.start_date_time ? `<p><strong>Start:</strong> ${map.start_date_time}</p>` : ""}
+          ${map.expected_duration ? `<p><strong>Duration:</strong> ${map.expected_duration}</p>` : ""}
+          ${map.description ? `<p><strong>Description:</strong> ${map.description}</p>` : ""}
+
+          <p class="meta">
+            <a href="${issue.html_url}" target="_blank">View on GitHub</a>
+          </p>
         </div>
       `;
     });
@@ -58,6 +50,6 @@ fetch(`https://api.github.com/repos/${owner}/${repo}/issues?labels=experiment&st
     container.innerHTML = html;
   })
   .catch(err => {
-    console.error("Error loading issues:", err);
+    console.error("Error loading experiments:", err);
     container.innerHTML = "<p>Error loading experiments.</p>";
   });
