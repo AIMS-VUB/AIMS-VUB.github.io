@@ -18,18 +18,25 @@ fetch(`https://api.github.com/repos/${owner}/${repo}/issues?labels=experiment&st
 
     issues.forEach(issue => {
       const map = {};
-      const lines = issue.body.split("\n");
 
-      lines.forEach(line => {
-        // Match lines like "**Field name:** value"
+      // Process each line
+      issue.body.split("\n").forEach(line => {
+        // Remove leading/trailing whitespace
+        line = line.trim();
+
+        // Skip empty lines
+        if (!line) return;
+
+        // Match **Field name:** value OR Field name: value
         const match = line.match(/^\**([\w\s\(\)]+)\**:\s*(.*)$/);
         if (match) {
-          const key = match[1].trim().toLowerCase().replace(/\s+/g,"_");
-          const val = match[2].trim();
-          if (val) map[key] = val;
+          const key = match[1].trim().toLowerCase().replace(/\s+/g, "_");
+          const value = match[2].trim();
+          if (value) map[key] = value;
         }
       });
 
+      // Build HTML card
       html += `
         <div class="experiment-card">
           <h3>${map.experiment_name || issue.title}</h3>
