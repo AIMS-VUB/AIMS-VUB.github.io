@@ -1,7 +1,6 @@
 const owner = "AIMS-VUB";
 const repo = "AIMS-VUB.github.io";
 
-
 const container = document.getElementById("gpu-experiments");
 const loading = document.getElementById("loading");
 
@@ -18,15 +17,27 @@ fetch(`https://api.github.com/repos/${owner}/${repo}/issues?labels=experiment&st
     let html = "";
 
     issues.forEach(issue => {
-      // Extract fields from issue body
+      // Create object to store fields
+      const fields = {
+        experiment_name: "",
+        requested_by: "",
+        started_by: "",
+        gpu: "",
+        start_time: "",
+        duration: "",
+        description: ""
+      };
+
+      // Parse issue body line by line
       const lines = issue.body.split("\n");
-      const fields = {};
       lines.forEach(line => {
-        const parts = line.split(":");
-        if (parts.length >= 2) {
-          const key = parts[0].trim().toLowerCase().replace(/\s/g,"_");
-          const value = parts.slice(1).join(":").trim();
-          fields[key] = value;
+        const index = line.indexOf(":");
+        if (index > -1) {
+          const key = line.slice(0, index).trim().toLowerCase().replace(/\s/g,"_");
+          const value = line.slice(index + 1).trim();
+          if (key in fields && value) {
+            fields[key] = value;
+          }
         }
       });
 
