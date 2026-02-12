@@ -1,35 +1,68 @@
 name: GPU Experiment
-description: Schedule a GPU experiment
+description: Schedule and track a GPU experiment
 title: "[GPU Experiment]: "
 labels: ["experiment"]
 
 body:
 
 - type: input
-  id: user
+  id: experiment_name
   attributes:
-    label: Name
+    label: Experiment name
+    placeholder: Diffusion model training
   validations:
     required: true
+
+
+- type: input
+  id: requested_by
+  attributes:
+    label: Requested by
+    placeholder: Alice
+  validations:
+    required: true
+
+
+- type: input
+  id: started_by
+  attributes:
+    label: Started by
+    placeholder: Bob (leave blank if not started yet)
+  validations:
+    required: false
+
 
 - type: input
   id: gpu
   attributes:
     label: GPU machine(s)
+    placeholder: gpu01, gpu02
   validations:
     required: true
 
+
 - type: input
-  id: start
+  id: start_time
   attributes:
-    label: Start time
+    label: Planned start date and time
+    placeholder: 2026-02-15 14:00
+  validations:
+    required: true
+
 
 - type: input
   id: duration
   attributes:
     label: Expected duration
+    placeholder: 8 hours
+  validations:
+    required: true
+
 
 - type: textarea
   id: description
   attributes:
     label: Description
+    placeholder: Training new model with dataset X
+  validations:
+    required: false
